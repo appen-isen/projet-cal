@@ -40,7 +40,12 @@ func getDayAndLink(c *gin.Context) {
 	if err != nil {
 		log.Fatalf("Error opening file: %v", err)
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+
+		}
+	}(file)
 
 	//Crée une carte pour stocker les dates et les liens
 	links := make(map[string]string)
@@ -72,5 +77,8 @@ func main() {
 	//Définition de la route /get_day avec la méthode GET et la fonction getDayAndLink qui renvoie le jour sous la forme d'un string (14-12-2024) et un lien sous la forme d'un string (https://www.google.com)
 	router.GET("/api/get_day", getDayAndLink)
 
-	router.Run(":8080")
+	err := router.Run(":8080")
+	if err != nil {
+		return
+	}
 }
