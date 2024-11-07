@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "API-Projet-CAL",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
