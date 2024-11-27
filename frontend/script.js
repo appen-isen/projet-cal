@@ -19,10 +19,11 @@ async function fetchDayData() {
 
 // Fonction pour mettre à jour le calendrier avec les données récupérées
 function updateCalendar(data) {
-    
-    const dateParts = data.date.split("-"); // Supposons que la date est au format "YYYY-MM-DD"
-    const day = parseInt(dateParts[2], 10); // Récupérer le jour comme entier
-
+    console.log(data);
+    const dateParts = data.date.split("-"); // Supposons que la date est au format "DD-MM-YYYY"
+    console.log(dateParts);
+    const day = parseInt(dateParts[1], 10); // Récupérer le jour comme entier
+    console.log(day);
     const box = document.getElementById(`day-${day}`);
     if (box) {
         // Ajouter un contenu ou une action à la boîte correspondant à la date
