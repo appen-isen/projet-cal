@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
@@ -64,15 +65,23 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 
+	// Enable CORS
+	router.Use(cors.Default())
+
 	// Serve static files from the frontend directory
-	router.Static("/static", "./frontend")
+	router.Static("/static", "../frontend")
 
 	// API route
 	router.GET("/api/get_day", getDayAndLink)
 
-	// Serve the index.html file
+	// Serve the index.html file for all other routes
 	router.NoRoute(func(c *gin.Context) {
-		c.File("../frontend/index.html")
+		path := c.Request.URL.Path
+		if strings.HasPrefix(path, "/static/") {
+			c.File("../frontend" + path)
+		} else {
+			c.File("../frontend/index.html")
+		}
 	})
 
 	err := router.Run(":8080")
