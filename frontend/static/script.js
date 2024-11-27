@@ -29,27 +29,30 @@ function initCalendar() {
 
             if (!dayData) return; // Si l'appel API échoue, on ne fait rien
 
+        
             const todayDate = parseInt(dayData.date.split("-")[0], 10); // Extraire le jour de la date (ex : "27")
             const link = dayData.link;
 
             if (parseInt(dayNumber, 10) === todayDate) {
-                showModal("🎉 Bravo !", `Voici votre lien du jour : <a href="${link}" target="_blank">${link}</a>`);
+                if (link)
+                    showModal(`Voici votre lien du jour : <a href="${link}" target="_blank">${link}</a>`);
+                else
+                showModal("Ce lien n'existe pas. Si cela n'est pas normale, veuillez contacter <a href='https://instagram.com/appen_isen'>Appen sur instagram</a>.");
             } else {
-                showModal("⏳ Patience...", "Ce n'est pas encore le jour pour ouvrir cette boîte !");
+                showModal("Ce lien n'est pas encore ou plus disponible !");
             }
         });
     });
 }
 
 // Fonction pour afficher une modale
-function showModal(title, message) {
+function showModal(message) {
     // Créer la structure HTML de la modale
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.innerHTML = `
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>${title}</h2>
             <p>${message}</p>
         </div>
     `;

@@ -53,10 +53,10 @@ func getDayAndLink(c *gin.Context) {
 		log.Fatalf("Error reading file: %v", err)
 	}
 
-	link, exists := links[date]
-	if !exists {
+	link/*, exists*/ := links[date]
+	/*if !exists {
 		link = "https://instagram.com/appen_isen"
-	}
+	}*/
 
 	c.JSON(200, LinkAndDate{Link: link, Date: date})
 }
