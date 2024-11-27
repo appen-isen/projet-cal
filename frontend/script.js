@@ -15,6 +15,8 @@ async function fetchDayData() {
     } catch (error) {
         console.error("Erreur lors de l'appel API :", error);
     }
+
+    document.getElementById("test").style.display = "none";
 }
 
 // Fonction pour mettre à jour le calendrier avec les données récupérées
