@@ -1,5 +1,5 @@
 // URL de l'API
-const apiUrl = "http://localhost:8080/api/get_day";
+const apiUrl = "https://calendrier.appen.fr/api/get_day";
 
 // Fonction pour récupérer les données depuis l'API
 async function fetchDayData() {
