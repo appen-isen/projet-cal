@@ -31,16 +31,22 @@ ENV TZ=Europe/Paris
 WORKDIR /app
 
 # Copy the built binary from builder
-COPY --from=backend-builder /app/backend/main .
+COPY --from=backend-builder /app/backend/main ./backend/main
 
 # Copy frontend files
 COPY frontend/ ./frontend/
 
 # Copy backend data file
-COPY backend/date_link.txt ./
+COPY backend/date_link.txt ./backend/date_link.txt
+
+# Create .env file to prevent crash in API handler
+RUN echo "FILE_NAME=date_link.txt" > ./backend/.env
 
 # Expose port
 EXPOSE 8080
+
+# Set working directory to backend so relative paths work
+WORKDIR /app/backend
 
 # Run the application
 CMD ["./main"]

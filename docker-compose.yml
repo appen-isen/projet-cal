@@ -13,5 +13,5 @@ services:
             - GIN_MODE=release
         volumes:
             # Mount date_link.txt so you can update it without rebuilding
-            - ./backend/date_link.txt:/app/date_link.txt:ro
+            - ./backend/date_link.txt:/app/backend/date_link.txt:ro
         restart: unless-stopped
