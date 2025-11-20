@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+    calendrier-avent:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: calendrier-avent-isen
+        ports:
+            - "8080:8080"
+        environment:
+            - FILE_NAME=date_link.txt
+            - GIN_MODE=release
+        volumes:
+            # Mount date_link.txt so you can update it without rebuilding
+            - ./backend/date_link.txt:/app/date_link.txt:ro
+        restart: unless-stopped
