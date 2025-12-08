@@ -4,6 +4,11 @@ const apiUrl = "https://calendrier.appen.fr/api/get_day";
 // Fonction pour récupérer les données depuis l'API
 async function fetchDayData() {
     try {
+        /* Ancienne version
+        const dateAuj = new Date().toISOString().slice(0, 10).split("-").reverse().join("-");
+        const apiUrlLegacy = "https://calendrier.appen.fr/api/get_link?date=" + dateAuj;
+        const response = await fetch(apiUrlLegacy);
+        */
         const response = await fetch(apiUrl);
 
         if (!response.ok) {
@@ -29,7 +34,7 @@ function initCalendar() {
 
             if (!dayData) return; // Si l'appel API échoue, on ne fait rien
 
-        
+
             const todayDate = parseInt(dayData.date.split("-")[0], 10); // Extraire le jour de la date (ex : "27")
             const link = dayData.link;
 
@@ -37,7 +42,7 @@ function initCalendar() {
                 if (link)
                     showModal(`Voici votre lien du jour : <a href="${link}" target="_blank">${link}</a>`);
                 else
-                showModal("Ce lien n'existe pas. Si cela n'est pas normale, veuillez contacter <a href='https://instagram.com/appen_isen'>Appen sur instagram</a>.");
+                    showModal("Ce lien n'existe pas. Si cela n'est pas normale, veuillez contacter <a href='https://instagram.com/appen_isen'>Appen sur instagram</a>.");
             } else {
                 showModal("Ce lien n'est pas encore ou plus disponible !");
             }

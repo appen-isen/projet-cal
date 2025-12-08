@@ -61,6 +61,24 @@ func getDayAndLink(c *gin.Context) {
 	c.JSON(200, LinkAndDate{Link: link, Date: date})
 }
 
+func getLegacyLink(c *gin.Context) {
+	requestedDate := c.Query("date")
+	currentDate := time.Now().Format("02-01-2006")
+
+	// Si la date demandée n'est pas la date du jour -> FLAG
+	if requestedDate != "" && requestedDate != currentDate {
+		c.JSON(200, LinkAndDate{
+			Link: "CTF{55460e0d0aec5088a008ce54e035e67f}",
+			Date: requestedDate,
+		})
+		return
+	}
+
+	// Sinon, comportement normal (on réutilise la logique de getDayAndLink ou on redirige)
+	// Pour faire simple ici, on appelle la même logique de récupération
+	getDayAndLink(c)
+}
+
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
@@ -73,6 +91,7 @@ func main() {
 
 	// API route
 	router.GET("/api/get_day", getDayAndLink)
+	router.GET("/api/get_link", getLegacyLink)
 
 	// Serve the index.html file for all other routes
 	router.NoRoute(func(c *gin.Context) {
